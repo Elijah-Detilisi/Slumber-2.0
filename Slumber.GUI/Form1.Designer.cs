@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.lockButton = new System.Windows.Forms.Button();
             this.restartButton = new System.Windows.Forms.Button();
@@ -35,6 +36,7 @@
             this.progressBar = new CircularProgressBar_NET5.CircularProgressBar();
             this.exitButton = new System.Windows.Forms.Button();
             this.textBox = new System.Windows.Forms.TextBox();
+            this.timerWidget = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,6 +63,7 @@
             this.lockButton.Size = new System.Drawing.Size(89, 66);
             this.lockButton.TabIndex = 1;
             this.lockButton.UseVisualStyleBackColor = false;
+            this.lockButton.Click += new System.EventHandler(this.lockButton_Click);
             // 
             // restartButton
             // 
@@ -75,6 +78,7 @@
             this.restartButton.Size = new System.Drawing.Size(89, 66);
             this.restartButton.TabIndex = 2;
             this.restartButton.UseVisualStyleBackColor = false;
+            this.restartButton.Click += new System.EventHandler(this.restartButton_Click);
             // 
             // shutButton
             // 
@@ -89,6 +93,7 @@
             this.shutButton.Size = new System.Drawing.Size(89, 66);
             this.shutButton.TabIndex = 3;
             this.shutButton.UseVisualStyleBackColor = false;
+            this.shutButton.Click += new System.EventHandler(this.shutButton_Click);
             // 
             // progressBar
             // 
@@ -122,7 +127,6 @@
             this.progressBar.SuperscriptMargin = new System.Windows.Forms.Padding(10, 35, 0, 0);
             this.progressBar.SuperscriptText = "";
             this.progressBar.TabIndex = 4;
-            this.progressBar.Text = "602";
             this.progressBar.TextMargin = new System.Windows.Forms.Padding(0);
             this.progressBar.Value = 20;
             this.progressBar.Visible = false;
@@ -158,6 +162,11 @@
             this.textBox.Text = "60";
             this.textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // timerWidget
+            // 
+            this.timerWidget.Interval = 1000;
+            this.timerWidget.Tick += new System.EventHandler(this.timerWidget_Tick);
+            // 
             // SlumberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -191,5 +200,6 @@
         private CircularProgressBar_NET5.CircularProgressBar progressBar;
         private Button exitButton;
         private TextBox textBox;
+        private System.Windows.Forms.Timer timerWidget;
     }
 }
