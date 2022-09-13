@@ -6,5 +6,13 @@ namespace Slumber.GUI
         {
             InitializeComponent();
         }
+
+        #region Event handlers
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
     }
 }
