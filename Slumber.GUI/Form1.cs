@@ -1,3 +1,4 @@
+using Slumber.Services.SystemService;
 using System.Diagnostics;
 
 namespace Slumber.GUI
@@ -23,26 +24,19 @@ namespace Slumber.GUI
         }
         private void shutButton_Click(object sender, EventArgs e)
         {
-            this._action = () => {
-
-            };
-            StartCountDown();
-        }
-        private void lockButton_Click(object sender, EventArgs e)
-        {
-            this._action = () => {
-
-            };
+            this._action = SysControl.ShutDown;
             StartCountDown();
         }
         private void restartButton_Click(object sender, EventArgs e)
         {
-            this._action = () => {
-
-            };
+            this._action = SysControl.Restart;
             StartCountDown();
         }
-        
+        private void lockButton_Click(object sender, EventArgs e)
+        {
+            this._action = SysControl.Lock;
+            StartCountDown();
+        }
         #endregion
 
         #region Support methods
@@ -51,12 +45,12 @@ namespace Slumber.GUI
             Invoke((MethodInvoker)(() =>
             {
                 this.progressBar.Text = this.seconds.ToString();
-                this.seconds--;
-
                 if (this.seconds == 0)
                 {
                     this.timerWidget.Stop();
+                    this._action();
                 }
+                this.seconds--;
 
             }));
         }

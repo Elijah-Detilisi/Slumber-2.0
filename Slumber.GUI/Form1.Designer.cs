@@ -181,6 +181,9 @@
             this.Controls.Add(this.lockButton);
             this.Controls.Add(this.pictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(332, 494);
+            this.MinimumSize = new System.Drawing.Size(332, 494);
             this.Name = "SlumberForm";
             this.Opacity = 0.92D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
