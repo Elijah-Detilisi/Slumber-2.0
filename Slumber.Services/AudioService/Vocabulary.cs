@@ -20,6 +20,10 @@ namespace Slumber.Services.AudioService
             {
                 "Report: Cancel",
                     "Operation has been cancelled"
+            },
+            {
+                "Report: Farewell",
+                    "Good bye."
             }
         };
 
@@ -43,6 +47,12 @@ namespace Slumber.Services.AudioService
                     new string[]{
                         "lock", "lock down", "lock up",
                         "security"
+                    }
+            },
+            {
+                "Power: Timer",
+                    new string[]{
+                        "in", "minute", "minutes", "second", "seconds"
                     }
             }
 

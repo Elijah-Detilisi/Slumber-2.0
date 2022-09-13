@@ -23,6 +23,9 @@ namespace Slumber.GUI
         #region Event handlers
         private void exitButton_Click(object sender, EventArgs e)
         {
+            this.progressBar.Hide();
+            this.textBox.Show();
+            
             this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Cancel"));
             this.timerWidget.Stop();
         }
@@ -54,8 +57,10 @@ namespace Slumber.GUI
                 this.progressBar.Text = this.seconds.ToString();
                 if (this.seconds == 0)
                 {
+                    this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Farewell"));
                     this.timerWidget.Stop();
                     this._action();
+                    this.Close();
                 }
                 this.seconds--;
 
@@ -64,6 +69,8 @@ namespace Slumber.GUI
         private void StartCountDown()
         {
             this.seconds = Int32.Parse(this.textBox.Text);
+            this._textToSpeech.SpeakAsync($"In {this.seconds} seconds");
+            
             this.textBox.Hide();
             this.progressBar.Show();
             this.timerWidget.Start();
