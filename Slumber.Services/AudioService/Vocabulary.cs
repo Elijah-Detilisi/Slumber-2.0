@@ -16,6 +16,10 @@ namespace Slumber.Services.AudioService
             {
                 "Report: Lock",
                     "Locking down computer"
+            },
+            {
+                "Report: Cancel",
+                    "Operation has been cancelled"
             }
         };
 
