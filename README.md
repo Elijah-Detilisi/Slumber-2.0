@@ -14,5 +14,10 @@ While running the software, you can easy say "Computer shutdown now" or "Compute
 ## Recognized Voice Commads
 To enagage with the system, the user should structure thier voice commands in the following formate:
 - Device_Name + Operation + TimeInterval
-### Where Device_Name is:
+#### Where Device_Name is:
 Whatever you chose to name the software, but the default device name is simply "Computer"; to change the device name please see the GUI.
+#### Where Operation is:
+Could either be one of the following
+1. To shut down: ("shut down", "power down", "turn off")
+2. To restart : ("restart", "reset")
+3. To lock: ("lock up", "lock down")
