@@ -25,3 +25,8 @@ Could either be one of the following
 The time you want to wait until performing the operation you have selected, these may be:
 1. "Now", "Immediately", "Right away"
 2. "In" + (0, 1, 2, 3 .... 1000) + "Minutes" + "And" + (0, 1, 2, 3 .... 1000) + "Seconds"
+
+### Correct Voice Command Examples
+1. "Computer shutdown immediately."
+2. "Computer shutdown in 5 minutes and 7 seconds"
+3. "Computer shutdown in 0 minutes and 80 seconds"
