@@ -21,3 +21,7 @@ Could either be one of the following
 1. To shut down: ("shut down", "power down", "turn off")
 2. To restart : ("restart", "reset")
 3. To lock: ("lock up", "lock down")
+#### Where Time_Interval is:
+The time you want to wait until performing the operation you have selected, these may be:
+1. "Now", "Immediately", "Right away"
+2. "In" + (0, 1, 2, 3 .... 1000) + "Minutes" + "And" + (0, 1, 2, 3 .... 1000) + "Seconds"
