@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.CompilerServices;
+
 namespace Slumber.Services.AudioService
 {
     public class Vocabulary
@@ -50,10 +52,7 @@ namespace Slumber.Services.AudioService
                     }
             },
             {
-                "Power: Timer",
-                    new string[]{
-                        "in", "minute", "minutes", "second", "seconds"
-                    }
+                "Power: Numbers", GetNumbers()
             }
 
         };
@@ -66,11 +65,24 @@ namespace Slumber.Services.AudioService
 
             return message;
         }
-
         public static string[] GetCommands(string commandKey)
         {
             var commands = _commands[commandKey];
             return commands;
+        }
+        #endregion
+
+        #region Support entities
+        private static string[] GetNumbers()
+        {
+            var numbers = new List<string>();
+
+            for(int i=0; i<60; i++)
+            {
+                numbers.Add(i.ToString());  
+            }
+
+            return numbers.ToArray();
         }
         #endregion
     }

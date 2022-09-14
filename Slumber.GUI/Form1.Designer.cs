@@ -35,8 +35,11 @@
             this.shutButton = new System.Windows.Forms.Button();
             this.progressBar = new CircularProgressBar_NET5.CircularProgressBar();
             this.exitButton = new System.Windows.Forms.Button();
-            this.textBox = new System.Windows.Forms.TextBox();
+            this.secondsTextBox = new System.Windows.Forms.TextBox();
             this.timerWidget = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.minutesTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,7 +110,7 @@
             this.progressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
             this.progressBar.InnerMargin = 2;
             this.progressBar.InnerWidth = -1;
-            this.progressBar.Location = new System.Drawing.Point(125, 54);
+            this.progressBar.Location = new System.Drawing.Point(125, 57);
             this.progressBar.MarqueeAnimationSpeed = 2000;
             this.progressBar.Name = "progressBar";
             this.progressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(28)))), ((int)(((byte)(43)))));
@@ -146,26 +149,62 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
-            // textBox
+            // secondsTextBox
             // 
-            this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.secondsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox.BackColor = System.Drawing.Color.Silver;
-            this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
-            this.textBox.ForeColor = System.Drawing.Color.Black;
-            this.textBox.Location = new System.Drawing.Point(114, 84);
-            this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(116, 25);
-            this.textBox.TabIndex = 12;
-            this.textBox.Text = "60";
-            this.textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.secondsTextBox.BackColor = System.Drawing.Color.Silver;
+            this.secondsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.secondsTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.secondsTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.secondsTextBox.ForeColor = System.Drawing.Color.Black;
+            this.secondsTextBox.Location = new System.Drawing.Point(184, 110);
+            this.secondsTextBox.Name = "secondsTextBox";
+            this.secondsTextBox.Size = new System.Drawing.Size(73, 25);
+            this.secondsTextBox.TabIndex = 12;
+            this.secondsTextBox.Text = "60";
+            this.secondsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // timerWidget
             // 
             this.timerWidget.Interval = 1000;
             this.timerWidget.Tick += new System.EventHandler(this.timerWidget_Tick);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(95, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 21);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Minutes:";
+            // 
+            // minutesTextBox
+            // 
+            this.minutesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.minutesTextBox.BackColor = System.Drawing.Color.Silver;
+            this.minutesTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.minutesTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.minutesTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.minutesTextBox.ForeColor = System.Drawing.Color.Black;
+            this.minutesTextBox.Location = new System.Drawing.Point(184, 71);
+            this.minutesTextBox.Name = "minutesTextBox";
+            this.minutesTextBox.Size = new System.Drawing.Size(73, 25);
+            this.minutesTextBox.TabIndex = 14;
+            this.minutesTextBox.Text = "1";
+            this.minutesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(95, 114);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(76, 21);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Seconds:";
             // 
             // SlumberForm
             // 
@@ -173,7 +212,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(194)))), ((int)(((byte)(194)))));
             this.ClientSize = new System.Drawing.Size(316, 455);
-            this.Controls.Add(this.textBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.minutesTextBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.secondsTextBox);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.shutButton);
@@ -202,7 +244,10 @@
         private Button shutButton;
         private CircularProgressBar_NET5.CircularProgressBar progressBar;
         private Button exitButton;
-        private TextBox textBox;
+        private TextBox secondsTextBox;
         private System.Windows.Forms.Timer timerWidget;
+        private Label label1;
+        private TextBox minutesTextBox;
+        private Label label2;
     }
 }

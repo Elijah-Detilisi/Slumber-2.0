@@ -5,46 +5,50 @@ namespace Slumber.Services.AudioService
 {
     using System.Diagnostics;
     using System.Globalization;
+    using System.Runtime.CompilerServices;
     using System.Speech.Recognition;
 
     public class SpeechRecognition
     {
         #region Instances
-        private string _dicatationTextResult;
+        private string _textResult;
+        private Action<string> _customAction;
         private CultureInfo _recognizerDialact;
-        private readonly SpeechRecognitionEngine _dictationSpeechRecognizer;
-
+        private readonly SpeechRecognitionEngine _recognizer;
+        
         #endregion
 
         public SpeechRecognition()
         {
-            _dicatationTextResult = "";
+            _textResult = "";
+            _customAction = Console.WriteLine;
             _recognizerDialact = new CultureInfo("en-GB");
-            _dictationSpeechRecognizer = new SpeechRecognitionEngine(_recognizerDialact);
+            _recognizer = new SpeechRecognitionEngine(_recognizerDialact);
 
             initializeRecognizer();
         }
 
+        #region Setter methods
+        public void SetCustomAction(Action<string> action)
+        {
+            _customAction = action; 
+        }
+        #endregion
+
         #region Recognizer Launching
         public void StartDictating()
         {
-            _dictationSpeechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+            _recognizer.RecognizeAsync(RecognizeMode.Multiple);
         }
         #endregion
 
         #region Recognizer Results
-        public string GetAsyncDictation()
+        public string GetRecognizedText()
         {
-            var result = _dicatationTextResult;
-            _dicatationTextResult = "";
+            var result = _textResult;
+            _textResult = "";
 
             return result;
-        }
-        public string GetActiveDictation()
-        {
-            var result = _dictationSpeechRecognizer.Recognize().Text;
-
-            return (result != null) ? result : "";
         }
         #endregion
 
@@ -52,34 +56,52 @@ namespace Slumber.Services.AudioService
         private void LoadSystemVocabulary()
         {
             //Get commands
-            var dictationVocabulary = Vocabulary.GetCommands("Power: Off").Concat(
-                                      Vocabulary.GetCommands("Power: Restart").Concat(
-                                      Vocabulary.GetCommands("Power: Lock")));
+            var numberCommands = Vocabulary.GetCommands("Power: Numbers");
+            var powerCommands = Vocabulary.GetCommands("Power: Off").Concat(
+                                Vocabulary.GetCommands("Power: Restart").Concat(
+                                Vocabulary.GetCommands("Power: Lock")));
 
-            var dictationChoices = new Choices(dictationVocabulary.ToArray<string>());
+            //Get choices
+            var powerChoices = new Choices(powerCommands.ToArray<string>());
+            var minutesChoices = new Choices(new string[] { "minute", "minutes" });
+            var secondsChoices = new Choices(new string[] { "second", "seconds" });
+            var numberChoices = new Choices(numberCommands);
+            
+            //Get grammar builder
+            var commandGrammarBuilder = new GrammarBuilder();
+            commandGrammarBuilder.Append(powerChoices);
+            commandGrammarBuilder.Append("in");
+            commandGrammarBuilder.Append(numberChoices);
+            commandGrammarBuilder.Append(minutesChoices);
+            commandGrammarBuilder.Append("and");
+            commandGrammarBuilder.Append(numberChoices);
+            commandGrammarBuilder.Append(secondsChoices);
 
-            //Prepare recognizer grammar
-            var dicatationGrammar = new Grammar(new GrammarBuilder(dictationChoices));
+
+            //Get grammer
+            var recognizerGrammar = new Grammar(commandGrammarBuilder);
 
             //Load Grammar
-            _dictationSpeechRecognizer.LoadGrammar(dicatationGrammar);
+            _recognizer.LoadGrammar(recognizerGrammar);
 
         }
         private void initializeRecognizer()
         {
             LoadSystemVocabulary();
-            _dictationSpeechRecognizer.SetInputToDefaultAudioDevice();
+            _recognizer.SetInputToDefaultAudioDevice();
 
             //Speech event Handlers
-            _dictationSpeechRecognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(_dictationSpeechRecognizer_SpeechRecognized);
+            _recognizer.SpeechRecognized +=
+                new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
         }
         #endregion
 
         #region Recognizer Event Handlers
-        private void _dictationSpeechRecognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            _dicatationTextResult = e.Result.Text;
-            Debug.WriteLine("Recognized dictation: " + _dicatationTextResult);
+            _textResult = e.Result.Text;
+            _customAction(_textResult);
+            Debug.WriteLine("Recognized dictation: " + _textResult);
         }
         #endregion
     }
