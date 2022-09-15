@@ -3,6 +3,9 @@ namespace Slumber.GUI
 {
     using Slumber.Services.AudioService;
     using Slumber.Services.SystemService;
+    using System.Diagnostics;
+    using System.Linq;
+    using static System.Net.Mime.MediaTypeNames;
 
     public partial class SlumberForm : Form
     {
@@ -19,13 +22,15 @@ namespace Slumber.GUI
             this._action = Console.Beep;
             this._textToSpeech = new TextToSpeech();
             this._speechRecognition = new SpeechRecognition();
+
+            //this._speechRecognition.SetCustomAction(this.ProccessUserInput);
+            this._speechRecognition.StartDictating();
             InitializeComponent();
         }
 
         #region Event handlers
         private void exitButton_Click(object sender, EventArgs e)
         {
-            this._speechRecognition.StartDictating();
             this.progressBar.Hide();
             this.label1.Show();
             this.label2.Show();
@@ -61,9 +66,7 @@ namespace Slumber.GUI
             this._action = SysControl.Lock;
             StartCountDown();
         }
-        #endregion
 
-        #region Support methods
         private void timerWidget_Tick(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() =>
@@ -82,6 +85,10 @@ namespace Slumber.GUI
 
             }));
         }
+        #endregion
+
+        #region Support methods
+
         private void StartCountDown()
         {
             this.seconds = Int32.Parse(this.minutesTextBox.Text)*60 + Int32.Parse(this.secondsTextBox.Text);
@@ -94,6 +101,34 @@ namespace Slumber.GUI
 
             this.progressBar.Show();
             this.timerWidget.Start();
+        }
+
+        private void ProccessUserInput(string userInput)
+        {
+            var splitUserInput = userInput.Split(" ");
+            var powerOffCommand = splitUserInput[0] + " " + splitUserInput[1];
+
+            if (Vocabulary.GetCommands("Power: Off").Contains(powerOffCommand))
+            {
+                Console.Beep();
+                userInput = userInput.Replace(powerOffCommand, "");
+                Debug.WriteLine(userInput);
+                this.minutesTextBox.Text = splitUserInput[3];
+                this.secondsTextBox.Text = splitUserInput[6];
+
+                this.shutButton.PerformClick();
+            }
+            else if (Vocabulary.GetCommands("Power: Restart").Contains(splitUserInput[0]))
+            {
+                Console.Beep();
+                this.restartButton.PerformClick();
+            }
+            else if (Vocabulary.GetCommands("Power: Lock").Contains(splitUserInput[0]))
+            {
+                Console.Beep();
+                this.lockButton.PerformClick();
+            }
+
         }
 
         #endregion

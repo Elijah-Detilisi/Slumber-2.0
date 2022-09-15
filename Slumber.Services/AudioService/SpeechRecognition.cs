@@ -11,44 +11,43 @@ namespace Slumber.Services.AudioService
     public class SpeechRecognition
     {
         #region Instances
-        private string _textResult;
-        private Action<string> _customAction;
+        private Action<string> _timerAction;
+        private Action<string> _commandAction;
         private CultureInfo _recognizerDialact;
-        private readonly SpeechRecognitionEngine _recognizer;
+
+        private readonly SpeechRecognitionEngine _timerRecognizer;
+        private readonly SpeechRecognitionEngine _commandRecognizer;
         
         #endregion
 
         public SpeechRecognition()
         {
-            _textResult = "";
-            _customAction = Console.WriteLine;
+            _timerAction = Console.WriteLine;
+            _commandAction = Console.WriteLine;
+            
             _recognizerDialact = new CultureInfo("en-GB");
-            _recognizer = new SpeechRecognitionEngine(_recognizerDialact);
-
+            _timerRecognizer = new SpeechRecognitionEngine(_recognizerDialact);
+            _commandRecognizer = new SpeechRecognitionEngine(_recognizerDialact);
+            
             initializeRecognizer();
         }
 
         #region Setter methods
-        public void SetCustomAction(Action<string> action)
+        public void SetCommandAction(Action<string> action)
         {
-            _customAction = action; 
+            _commandAction = action; 
+        }
+        public void SetTimerAction(Action<string> action)
+        {
+            _timerAction = action; 
         }
         #endregion
 
         #region Recognizer Launching
         public void StartDictating()
         {
-            _recognizer.RecognizeAsync(RecognizeMode.Multiple);
-        }
-        #endregion
-
-        #region Recognizer Results
-        public string GetRecognizedText()
-        {
-            var result = _textResult;
-            _textResult = "";
-
-            return result;
+            _commandRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+            _timerRecognizer.RecognizeAsync(RecognizeMode.Multiple);
         }
         #endregion
 
@@ -62,46 +61,61 @@ namespace Slumber.Services.AudioService
                                 Vocabulary.GetCommands("Power: Lock")));
 
             //Get choices
+            var numberChoices = new Choices(numberCommands);
             var powerChoices = new Choices(powerCommands.ToArray<string>());
             var minutesChoices = new Choices(new string[] { "minute", "minutes" });
             var secondsChoices = new Choices(new string[] { "second", "seconds" });
-            var numberChoices = new Choices(numberCommands);
-            
+
+
             //Get grammar builder
             var commandGrammarBuilder = new GrammarBuilder();
+            var timerGrammarBuilder = new GrammarBuilder();
+            
             commandGrammarBuilder.Append(powerChoices);
-            commandGrammarBuilder.Append("in");
-            commandGrammarBuilder.Append(numberChoices);
-            commandGrammarBuilder.Append(minutesChoices);
-            commandGrammarBuilder.Append("and");
-            commandGrammarBuilder.Append(numberChoices);
-            commandGrammarBuilder.Append(secondsChoices);
-
+            timerGrammarBuilder.Append("Set timer");
+            timerGrammarBuilder.Append(numberChoices);
+            timerGrammarBuilder.Append(minutesChoices);
+            timerGrammarBuilder.Append("and");
+            timerGrammarBuilder.Append(numberChoices);
+            timerGrammarBuilder.Append(secondsChoices);
 
             //Get grammer
+            var timerGrammar = new Grammar(timerGrammarBuilder);
             var recognizerGrammar = new Grammar(commandGrammarBuilder);
-
+            
             //Load Grammar
-            _recognizer.LoadGrammar(recognizerGrammar);
+            _commandRecognizer.LoadGrammar(recognizerGrammar);
+            _timerRecognizer.LoadGrammar(timerGrammar);
 
         }
         private void initializeRecognizer()
         {
             LoadSystemVocabulary();
-            _recognizer.SetInputToDefaultAudioDevice();
+            _commandRecognizer.SetInputToDefaultAudioDevice();
+            _timerRecognizer.SetInputToDefaultAudioDevice();
 
             //Speech event Handlers
-            _recognizer.SpeechRecognized +=
+            _commandRecognizer.SpeechRecognized +=
                 new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
+            _timerRecognizer.SpeechRecognized +=
+                new EventHandler<SpeechRecognizedEventArgs>(TimerSpeechRecognized);
         }
         #endregion
 
         #region Recognizer Event Handlers
         private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            _textResult = e.Result.Text;
-            _customAction(_textResult);
-            Debug.WriteLine("Recognized dictation: " + _textResult);
+            var textResult = e.Result.Text;
+            _commandAction(textResult);
+
+            Debug.WriteLine("Recognized recognizer: " + textResult);
+        }
+        private void TimerSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            var textResult = e.Result.Text;
+            _timerAction(textResult);
+
+            Debug.WriteLine("Recognized Timer: " + textResult);
         }
         #endregion
     }

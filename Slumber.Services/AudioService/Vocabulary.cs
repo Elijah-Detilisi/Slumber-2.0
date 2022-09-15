@@ -34,21 +34,20 @@ namespace Slumber.Services.AudioService
             {
                 "Power: Off",
                     new string[]{
-                        "turn off", "power off",
-                        "shut down", "power down"
+                        "turn off computer", "power off computer",
+                        "power down computer"
                     }
             },
             {
                 "Power: Restart",
                     new string[]{
-                        "restart", "reset"
+                        "restart computer"
                     }
             },
             {
                 "Power: Lock",
                     new string[]{
-                        "lock", "lock down", "lock up",
-                        "security"
+                        "lock computer"
                     }
             },
             {
