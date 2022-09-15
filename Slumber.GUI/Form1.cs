@@ -1,10 +1,9 @@
 
 namespace Slumber.GUI
 {
+    using System.Linq;
     using Slumber.Services.AudioService;
     using Slumber.Services.SystemService;
-    using System.Diagnostics;
-    using System.Linq;
     using static System.Net.Mime.MediaTypeNames;
 
     public partial class SlumberForm : Form
@@ -110,10 +109,9 @@ namespace Slumber.GUI
                 this.progressBar.Text = this.seconds.ToString();
                 if (this.seconds == 0)
                 {
-                    this._textToSpeech.Speak(Vocabulary.GetPromptMessage("Report: Farewell"));
+                    _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Farewell"));
                     this.timerWidget.Stop();
                     this._action();
-                    this.Close();
                 }
                 this.seconds--;
 
