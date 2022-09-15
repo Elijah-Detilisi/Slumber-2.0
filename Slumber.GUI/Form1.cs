@@ -23,50 +23,86 @@ namespace Slumber.GUI
             this._textToSpeech = new TextToSpeech();
             this._speechRecognition = new SpeechRecognition();
 
-            //this._speechRecognition.SetCustomAction(this.ProccessUserInput);
-            this._speechRecognition.StartDictating();
             InitializeComponent();
+            Shown += SlumberForm_Shown;
+        }
+        private void SlumberForm_Shown(object? sender, EventArgs e)
+        {
+            this.InitializeSlumberForm();
         }
 
-        #region Event handlers
-        private void exitButton_Click(object sender, EventArgs e)
+        #region Class methods
+        private void UpdateSystemState(bool isBusy)
         {
-            this.progressBar.Hide();
-            this.label1.Show();
-            this.label2.Show();
-            this.minutesTextBox.Show();
-            this.secondsTextBox.Show();
-            
-            _ = this._textToSpeech.SpeakAsync(
-                Vocabulary.GetPromptMessage("Report: Cancel")
-            );
-            this.timerWidget.Stop();
+            if (isBusy)
+            {
+                Invoke((MethodInvoker)(() =>
+                {
+                    this.exitButton.Enabled = true;
+                    this.shutButton.Enabled = false;
+                    this.restartButton.Enabled = false;
+                    this.lockButton.Enabled = false;
+
+                    this.label1.Hide();
+                    this.label2.Hide();
+                    this.minutesTextBox.Hide();
+                    this.secondsTextBox.Hide();
+                    this.progressBar.Show();
+                }));
+            }
+            else
+            {
+                Invoke((MethodInvoker)(() =>
+                {
+                    this.exitButton.Enabled = false;
+                    this.shutButton.Enabled = true;
+                    this.restartButton.Enabled = true;
+                    this.lockButton.Enabled = true;
+
+                    this.progressBar.Hide();
+                    this.label1.Show();
+                    this.label2.Show();
+                    this.minutesTextBox.Show();
+                    this.secondsTextBox.Show();
+                }));   
+            }
         }
+
+        private void InitializeSlumberForm()
+        {
+            UpdateSystemState(isBusy: false);
+            this._speechRecognition.SetTimerAction(this.ProccessTimer);
+            this._speechRecognition.SetCommandAction(this.ProccessCommands);
+            this._speechRecognition.StartDictating();
+        }
+        #endregion  
+
+        #region Event handlers
         private void shutButton_Click(object sender, EventArgs e)
         {
-            _ = this._textToSpeech.SpeakAsync(
-                Vocabulary.GetPromptMessage("Report: Shut down")
-            );
             this._action = SysControl.ShutDown;
-            StartCountDown();
+            this.ExecuteOperation("Report: Shut down");
+            
         }
         private void restartButton_Click(object sender, EventArgs e)
         {
-            _ = this._textToSpeech.SpeakAsync(
-                Vocabulary.GetPromptMessage("Report: Restart")
-            );
             this._action = SysControl.Restart;
-            StartCountDown();
+            this.ExecuteOperation("Report: Restart");
         }
         private void lockButton_Click(object sender, EventArgs e)
         {
-            _ = this._textToSpeech.SpeakAsync(
-                Vocabulary.GetPromptMessage("Report: Lock")
-            );
             this._action = SysControl.Lock;
-            StartCountDown();
+            this.ExecuteOperation("Report: Lock");
         }
-
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.timerWidget.Stop();
+            _ = this._textToSpeech.SpeakAsync(
+                Vocabulary.GetPromptMessage("Report: Cancel")
+            );
+            
+            UpdateSystemState(isBusy: false);
+        }
         private void timerWidget_Tick(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() =>
@@ -74,9 +110,7 @@ namespace Slumber.GUI
                 this.progressBar.Text = this.seconds.ToString();
                 if (this.seconds == 0)
                 {
-                    _ = this._textToSpeech.SpeakAsync(
-                            Vocabulary.GetPromptMessage("Report: Farewell")
-                    );
+                    this._textToSpeech.Speak(Vocabulary.GetPromptMessage("Report: Farewell"));
                     this.timerWidget.Stop();
                     this._action();
                     this.Close();
@@ -88,22 +122,20 @@ namespace Slumber.GUI
         #endregion
 
         #region Support methods
-
-        private void StartCountDown()
+        private void ExecuteOperation(string operation)
         {
-            this.seconds = Int32.Parse(this.minutesTextBox.Text)*60 + Int32.Parse(this.secondsTextBox.Text);
-            _ = this._textToSpeech.SpeakAsync($"In {this.seconds} seconds");
+            UpdateSystemState(isBusy: true);
+            this.seconds = Int32.Parse(this.minutesTextBox.Text) * 60 + Int32.Parse(this.secondsTextBox.Text);
 
-            this.label1.Hide();
-            this.label2.Hide();
-            this.minutesTextBox.Hide();
-            this.secondsTextBox.Hide();
-
-            this.progressBar.Show();
+            // Notify User
+            this._textToSpeech.Speak(
+                Vocabulary.GetPromptMessage(operation) + $" in {this.seconds} seconds"
+            );
+            
+            // Start timer
             this.timerWidget.Start();
         }
-
-        private void ProccessUserInput(string userInput)
+        private void ProccessCommands(string userInput)
         {
             var splitUserInput = userInput.Split(" ");
             var powerOffCommand = splitUserInput[0] + " " + splitUserInput[1];
@@ -111,11 +143,6 @@ namespace Slumber.GUI
             if (Vocabulary.GetCommands("Power: Off").Contains(powerOffCommand))
             {
                 Console.Beep();
-                userInput = userInput.Replace(powerOffCommand, "");
-                Debug.WriteLine(userInput);
-                this.minutesTextBox.Text = splitUserInput[3];
-                this.secondsTextBox.Text = splitUserInput[6];
-
                 this.shutButton.PerformClick();
             }
             else if (Vocabulary.GetCommands("Power: Restart").Contains(splitUserInput[0]))
@@ -128,9 +155,16 @@ namespace Slumber.GUI
                 Console.Beep();
                 this.lockButton.PerformClick();
             }
+        }
+        private void ProccessTimer(string userInput)
+        {
+            var splitUserInput = userInput.Split(" ");
 
+            this.minutesTextBox.Text = splitUserInput[2];
+            this.secondsTextBox.Text = splitUserInput[5];
         }
 
         #endregion
+
     }
 }
