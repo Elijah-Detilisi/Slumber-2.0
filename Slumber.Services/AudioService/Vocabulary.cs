@@ -8,6 +8,10 @@ namespace Slumber.Services.AudioService
         #region Data fields
         private readonly static Dictionary<string, string> _promptMessages = new Dictionary<string, string>(){
             {
+                "Report: Greeting",
+                    "Slumber ready to take commands."
+            },
+            {
                 "Report: Shut down",
                     "Shutting down computer"
             },

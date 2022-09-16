@@ -44,9 +44,21 @@ namespace Slumber.Services.AudioService
         #endregion
 
         #region Recognizer Launching
-        public void StartDictating()
+        public void StartCommandRecognizer()
         {
             _commandRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+        }
+        public void StartControlRecognizer()
+        {
+            _controlRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+        }
+        public void StopCommandRecognizer()
+        {
+            _commandRecognizer.RecognizeAsyncStop();
+        }
+        public void StopControlRecognizer()
+        {
+            _controlRecognizer.RecognizeAsyncStop();
         }
 
         public string ControlListen()
@@ -94,17 +106,27 @@ namespace Slumber.Services.AudioService
 
             //Speech event Handlers
             _commandRecognizer.SpeechRecognized +=
-                new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
+                new EventHandler<SpeechRecognizedEventArgs>(CommandSpeechRecognized);
+            _controlRecognizer.SpeechRecognized +=
+                new EventHandler<SpeechRecognizedEventArgs>(ControlSpeechRecognized);
         }
         #endregion
 
         #region Recognizer Event Handlers
-        private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        private void CommandSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             var textResult = e.Result.Text;
             _commandAction(textResult);
 
-            Debug.WriteLine("Recognized recognizer: " + textResult);
+            Debug.WriteLine("Command recognizer: " + textResult);
+        }
+
+        private void ControlSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            var textResult = e.Result.Text;
+            _controlAction(textResult);
+
+            Debug.WriteLine("Control recognizer: " + textResult);
         }
         #endregion
 

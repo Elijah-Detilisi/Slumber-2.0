@@ -8,6 +8,7 @@ namespace Slumber.GUI
     public partial class SlumberForm : Form
     {
         #region Instances
+        private string _operationName;
         private Action _operationAction;
         private TextToSpeech _textToSpeech;
         private SpeechRecognition _speechRecognition;
@@ -15,6 +16,7 @@ namespace Slumber.GUI
 
         public SlumberForm()
         {
+            this._operationName = "";
             this._operationAction = Console.Beep;
             this._textToSpeech = new TextToSpeech();
             this._speechRecognition = new SpeechRecognition();
@@ -39,26 +41,37 @@ namespace Slumber.GUI
                     this.shutButton.Enabled = false;
                     this.restartButton.Enabled = false;
                     this.lockButton.Enabled = false;
+
+                    this._speechRecognition.StopCommandRecognizer();
+                    this._speechRecognition.StartControlRecognizer();
                 }));
             }
             else
             {
                 Invoke((MethodInvoker)(() =>
                 {
+                    Console.Beep();
+                    _ = this._textToSpeech.SpeakAsync(
+                        Vocabulary.GetPromptMessage("Report: Greeting")
+                    );
+
                     this.cancelButton.Hide();
                     this.confirmButton.Hide();
                     this.shutButton.Enabled = true;
                     this.restartButton.Enabled = true;
                     this.lockButton.Enabled = true;
+
+                    this._speechRecognition.StartCommandRecognizer();
+                    this._speechRecognition.StopControlRecognizer();
                 }));   
             }
         }
 
         private void InitializeSlumberForm()
         {
-            UpdateSystemState(isBusy: false);
             this._speechRecognition.SetCommandAction(this.ProccessCommands);
-            this._speechRecognition.StartDictating();
+            this._speechRecognition.SetControlAction(this.ProccessControl);
+            UpdateSystemState(isBusy: false);
         }
         #endregion  
 
@@ -102,22 +115,13 @@ namespace Slumber.GUI
         #region Support methods
         private void ExecuteOperation(string operation)
         {
-            this.UpdateSystemState(isBusy: true);
-            _ = this._textToSpeech.SpeakAsync(
-                $"Are you sure you want to {operation.Split(":")[1]} the computer? Say Yes to proceed or No to cancel."
-            );
+            this._operationName = operation;
             
-            var verification = _speechRecognition.ControlListen();
-            if(verification == "Proceed")
-            {
-                _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage(operation));
-                _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Farewell"));
-                this._operationAction();
-            }
-            else
-            {
-                this.cancelButton.PerformClick();
-            }
+            _ = this._textToSpeech.SpeakAsync(
+                $"Are you sure you want to {operation.Split(":")[1]} the computer?"
+            );
+
+            this.UpdateSystemState(isBusy: true);
         }
         private void ProccessCommands(string userInput)
         {
@@ -135,6 +139,21 @@ namespace Slumber.GUI
             {
                 Console.Beep();
                 this.lockButton.PerformClick();
+            }
+        }
+
+        private void ProccessControl(string userInput)
+        {
+            if (userInput == "Yes")
+            {
+                _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage(this._operationName));
+                _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Farewell"));
+                this._operationAction();
+            }
+            else
+            {
+                _ = this._textToSpeech.SpeakAsync("Permission not granted");
+                this.cancelButton.PerformClick();
             }
         }
         #endregion
