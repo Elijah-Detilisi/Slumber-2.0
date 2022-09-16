@@ -1,7 +1,7 @@
 # Slumber-2.0 : Just for fun
 This software allows you to shutdown, lock or restart your Windows computer when you issue a simple voice command.
 No need to stain your keyboard and mouse with greasy fingers when you want to power down your pc to enjoy your favourite snack.
-While running the software, you can easy say "Computer shutdown now" or "Computer restart immediately", it's like having your very own virtual butler.
+While running the software, you can easy say "shutdown the computer" or "restart the computer", it's like having your very own virtual butler.
 
 ## System Capabilities
 1. Shut down/turn off computer
@@ -23,4 +23,4 @@ These are actions you want the system to perform and they could either be one of
 ### Correct Voice Command Examples
 1. "Shutdown the computer."
 2. "Lock the computer"
-3. "Restart the computer"
+3. "Reset the computer"
