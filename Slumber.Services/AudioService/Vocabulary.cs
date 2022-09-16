@@ -55,9 +55,6 @@ namespace Slumber.Services.AudioService
                     }
             },
             {
-                "Power: Numbers", GetNumbers()
-            },
-            {
                 "System: Control", new string[]{
                         "Yes",  "No"
                     }
@@ -80,18 +77,5 @@ namespace Slumber.Services.AudioService
         }
         #endregion
 
-        #region Support entities
-        private static string[] GetNumbers()
-        {
-            var numbers = new List<string>();
-
-            for(int i=0; i<60; i++)
-            {
-                numbers.Add(i.ToString());  
-            }
-
-            return numbers.ToArray();
-        }
-        #endregion
     }
 }
