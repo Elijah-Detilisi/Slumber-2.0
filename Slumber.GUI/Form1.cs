@@ -96,10 +96,9 @@ namespace Slumber.GUI
         //Control buttons
         private void confirmButton_Click(object sender, EventArgs e)
         {
-            _ = this._textToSpeech.SpeakAsync(
-                Vocabulary.GetPromptMessage("Report: Cancel")
-            );
-
+            _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage(this._operationName));
+            _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Farewell"));
+            this._operationAction();
             UpdateSystemState(isBusy: false);
         }
         private void cancelButton_Click(object sender, EventArgs e)
@@ -146,9 +145,7 @@ namespace Slumber.GUI
         {
             if (userInput == "Yes")
             {
-                _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage(this._operationName));
-                _ = this._textToSpeech.SpeakAsync(Vocabulary.GetPromptMessage("Report: Farewell"));
-                this._operationAction();
+                this.confirmButton.PerformClick();
             }
             else
             {
