@@ -24,3 +24,6 @@ These are actions you want the system to perform and they could either be one of
 1. "Shutdown the computer."
 2. "Lock the computer"
 3. "Reset the computer"
+
+## Screenshot
+![alt text](https://github.com/Elijah-Detilisi/Slumber-2.0/blob/master/Slumber.GUI/Resources/Demo%20Screenshot.PNG?raw=true)
