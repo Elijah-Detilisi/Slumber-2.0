@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SlumberForm));
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.lockButton = new System.Windows.Forms.Button();
             this.restartButton = new System.Windows.Forms.Button();
@@ -223,6 +224,7 @@
             this.Controls.Add(this.lockButton);
             this.Controls.Add(this.pictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(332, 494);
             this.MinimumSize = new System.Drawing.Size(332, 494);

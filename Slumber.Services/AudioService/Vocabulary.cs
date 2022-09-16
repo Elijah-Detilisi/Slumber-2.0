@@ -52,6 +52,11 @@ namespace Slumber.Services.AudioService
             },
             {
                 "Power: Numbers", GetNumbers()
+            },
+            {
+                "System: Control", new string[]{
+                        "Cancel Operation",  "Wake Up"
+                    }
             }
 
         };

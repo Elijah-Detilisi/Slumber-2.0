@@ -126,7 +126,7 @@ namespace Slumber.GUI
             this.seconds = Int32.Parse(this.minutesTextBox.Text) * 60 + Int32.Parse(this.secondsTextBox.Text);
 
             // Notify User
-            this._textToSpeech.Speak(
+            _ = this._textToSpeech.SpeakAsync(
                 Vocabulary.GetPromptMessage(operation) + $" in {this.seconds} seconds"
             );
             
@@ -135,20 +135,17 @@ namespace Slumber.GUI
         }
         private void ProccessCommands(string userInput)
         {
-            var splitUserInput = userInput.Split(" ");
-            var powerOffCommand = splitUserInput[0] + " " + splitUserInput[1];
-
-            if (Vocabulary.GetCommands("Power: Off").Contains(powerOffCommand))
+            if (Vocabulary.GetCommands("Power: Off").Contains(userInput))
             {
                 Console.Beep();
                 this.shutButton.PerformClick();
             }
-            else if (Vocabulary.GetCommands("Power: Restart").Contains(splitUserInput[0]))
+            else if (Vocabulary.GetCommands("Power: Restart").Contains(userInput))
             {
                 Console.Beep();
                 this.restartButton.PerformClick();
             }
-            else if (Vocabulary.GetCommands("Power: Lock").Contains(splitUserInput[0]))
+            else if (Vocabulary.GetCommands("Power: Lock").Contains(userInput))
             {
                 Console.Beep();
                 this.lockButton.PerformClick();
@@ -160,6 +157,8 @@ namespace Slumber.GUI
 
             this.minutesTextBox.Text = splitUserInput[2];
             this.secondsTextBox.Text = splitUserInput[5];
+            _ = this._textToSpeech.SpeakAsync($"Timer set for {userInput.Replace("Set timer", " ")}"
+            );
         }
 
         #endregion

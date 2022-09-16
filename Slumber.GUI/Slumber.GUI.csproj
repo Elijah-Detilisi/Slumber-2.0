@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>sleep.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="sleep.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CircularProgressBar_NET5" Version="3.0.0" />
