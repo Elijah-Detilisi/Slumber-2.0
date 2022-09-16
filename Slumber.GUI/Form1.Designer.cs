@@ -28,40 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SlumberForm));
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.lockButton = new System.Windows.Forms.Button();
             this.restartButton = new System.Windows.Forms.Button();
             this.shutButton = new System.Windows.Forms.Button();
-            this.progressBar = new CircularProgressBar_NET5.CircularProgressBar();
-            this.exitButton = new System.Windows.Forms.Button();
-            this.secondsTextBox = new System.Windows.Forms.TextBox();
-            this.timerWidget = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.minutesTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.topPanel = new System.Windows.Forms.Panel();
+            this.cancelButton = new System.Windows.Forms.Button();
+            this.confirmButton = new System.Windows.Forms.Button();
+            this.bottomPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.topPanel.SuspendLayout();
+            this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox
             // 
-            this.pictureBox.Image = global::Slumber.GUI.Properties.Resources.chatbot;
-            this.pictureBox.Location = new System.Drawing.Point(10, 7);
+            this.pictureBox.Image = global::Slumber.GUI.Properties.Resources.bot;
+            this.pictureBox.Location = new System.Drawing.Point(22, 12);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(75, 59);
+            this.pictureBox.Size = new System.Drawing.Size(96, 89);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
             // lockButton
             // 
-            this.lockButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(194)))), ((int)(((byte)(194)))));
+            this.lockButton.BackColor = System.Drawing.Color.Transparent;
             this.lockButton.BackgroundImage = global::Slumber.GUI.Properties.Resources.lock_padlock_symbol_for_security_interface;
             this.lockButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.lockButton.FlatAppearance.BorderSize = 0;
             this.lockButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lockButton.Location = new System.Drawing.Point(125, 331);
+            this.lockButton.Location = new System.Drawing.Point(129, 196);
             this.lockButton.Name = "lockButton";
             this.lockButton.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lockButton.Size = new System.Drawing.Size(89, 66);
@@ -71,12 +69,12 @@
             // 
             // restartButton
             // 
-            this.restartButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(194)))), ((int)(((byte)(194)))));
+            this.restartButton.BackColor = System.Drawing.Color.Transparent;
             this.restartButton.BackgroundImage = global::Slumber.GUI.Properties.Resources.restart;
             this.restartButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.restartButton.FlatAppearance.BorderSize = 0;
             this.restartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.restartButton.Location = new System.Drawing.Point(125, 249);
+            this.restartButton.Location = new System.Drawing.Point(129, 112);
             this.restartButton.Name = "restartButton";
             this.restartButton.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.restartButton.Size = new System.Drawing.Size(89, 66);
@@ -86,12 +84,12 @@
             // 
             // shutButton
             // 
-            this.shutButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(194)))), ((int)(((byte)(194)))));
+            this.shutButton.BackColor = System.Drawing.Color.Transparent;
             this.shutButton.BackgroundImage = global::Slumber.GUI.Properties.Resources.shutdown;
             this.shutButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.shutButton.FlatAppearance.BorderSize = 0;
             this.shutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.shutButton.Location = new System.Drawing.Point(125, 160);
+            this.shutButton.Location = new System.Drawing.Point(129, 28);
             this.shutButton.Name = "shutButton";
             this.shutButton.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.shutButton.Size = new System.Drawing.Size(89, 66);
@@ -99,130 +97,67 @@
             this.shutButton.UseVisualStyleBackColor = false;
             this.shutButton.Click += new System.EventHandler(this.shutButton_Click);
             // 
-            // progressBar
+            // topPanel
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.AnimationFunction = WinFormAnimation_NET5.KnownAnimationFunctions.Linear;
-            this.progressBar.AnimationSpeed = 500;
-            this.progressBar.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.progressBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(219)))));
-            this.progressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.progressBar.InnerMargin = 2;
-            this.progressBar.InnerWidth = -1;
-            this.progressBar.Location = new System.Drawing.Point(125, 57);
-            this.progressBar.MarqueeAnimationSpeed = 2000;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(28)))), ((int)(((byte)(43)))));
-            this.progressBar.OuterMargin = -25;
-            this.progressBar.OuterWidth = 26;
-            this.progressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(213)))), ((int)(((byte)(219)))));
-            this.progressBar.ProgressWidth = 10;
-            this.progressBar.SecondaryFont = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.progressBar.Size = new System.Drawing.Size(89, 78);
-            this.progressBar.StartAngle = 270;
-            this.progressBar.Step = 1;
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.progressBar.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.progressBar.SubscriptText = "";
-            this.progressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.progressBar.SuperscriptMargin = new System.Windows.Forms.Padding(10, 35, 0, 0);
-            this.progressBar.SuperscriptText = "";
-            this.progressBar.TabIndex = 4;
-            this.progressBar.TextMargin = new System.Windows.Forms.Padding(0);
-            this.progressBar.Value = 20;
-            this.progressBar.Visible = false;
+            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(94)))), ((int)(((byte)(156)))));
+            this.topPanel.Controls.Add(this.cancelButton);
+            this.topPanel.Controls.Add(this.pictureBox);
+            this.topPanel.Controls.Add(this.confirmButton);
+            this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topPanel.Location = new System.Drawing.Point(0, 0);
+            this.topPanel.Name = "topPanel";
+            this.topPanel.Size = new System.Drawing.Size(316, 129);
+            this.topPanel.TabIndex = 6;
             // 
-            // exitButton
+            // cancelButton
             // 
-            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitButton.BackColor = System.Drawing.Color.Firebrick;
-            this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.exitButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.exitButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.exitButton.Location = new System.Drawing.Point(229, 410);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(75, 33);
-            this.exitButton.TabIndex = 9;
-            this.exitButton.Text = "Cancel";
-            this.exitButton.UseVisualStyleBackColor = false;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            this.cancelButton.BackColor = System.Drawing.Color.Transparent;
+            this.cancelButton.BackgroundImage = global::Slumber.GUI.Properties.Resources.cancel;
+            this.cancelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.cancelButton.FlatAppearance.BorderSize = 0;
+            this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelButton.Location = new System.Drawing.Point(259, 12);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cancelButton.Size = new System.Drawing.Size(45, 40);
+            this.cancelButton.TabIndex = 5;
+            this.cancelButton.UseVisualStyleBackColor = false;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // secondsTextBox
+            // confirmButton
             // 
-            this.secondsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.secondsTextBox.BackColor = System.Drawing.Color.Silver;
-            this.secondsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.secondsTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.secondsTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
-            this.secondsTextBox.ForeColor = System.Drawing.Color.Black;
-            this.secondsTextBox.Location = new System.Drawing.Point(184, 110);
-            this.secondsTextBox.Name = "secondsTextBox";
-            this.secondsTextBox.Size = new System.Drawing.Size(73, 25);
-            this.secondsTextBox.TabIndex = 12;
-            this.secondsTextBox.Text = "60";
-            this.secondsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.confirmButton.BackColor = System.Drawing.Color.Transparent;
+            this.confirmButton.BackgroundImage = global::Slumber.GUI.Properties.Resources.check;
+            this.confirmButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.confirmButton.FlatAppearance.BorderSize = 0;
+            this.confirmButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.confirmButton.Location = new System.Drawing.Point(205, 12);
+            this.confirmButton.Name = "confirmButton";
+            this.confirmButton.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.confirmButton.Size = new System.Drawing.Size(45, 40);
+            this.confirmButton.TabIndex = 4;
+            this.confirmButton.UseVisualStyleBackColor = false;
+            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
-            // timerWidget
+            // bottomPanel
             // 
-            this.timerWidget.Interval = 1000;
-            this.timerWidget.Tick += new System.EventHandler(this.timerWidget_Tick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(95, 72);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 21);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Minutes:";
-            // 
-            // minutesTextBox
-            // 
-            this.minutesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.minutesTextBox.BackColor = System.Drawing.Color.Silver;
-            this.minutesTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.minutesTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.minutesTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
-            this.minutesTextBox.ForeColor = System.Drawing.Color.Black;
-            this.minutesTextBox.Location = new System.Drawing.Point(184, 71);
-            this.minutesTextBox.Name = "minutesTextBox";
-            this.minutesTextBox.Size = new System.Drawing.Size(73, 25);
-            this.minutesTextBox.TabIndex = 14;
-            this.minutesTextBox.Text = "1";
-            this.minutesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(95, 114);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 21);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Seconds:";
+            this.bottomPanel.Controls.Add(this.shutButton);
+            this.bottomPanel.Controls.Add(this.restartButton);
+            this.bottomPanel.Controls.Add(this.lockButton);
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 129);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(316, 326);
+            this.bottomPanel.TabIndex = 7;
             // 
             // SlumberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(194)))), ((int)(((byte)(194)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.ClientSize = new System.Drawing.Size(316, 455);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.minutesTextBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.secondsTextBox);
-            this.Controls.Add(this.exitButton);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.shutButton);
-            this.Controls.Add(this.restartButton);
-            this.Controls.Add(this.lockButton);
-            this.Controls.Add(this.pictureBox);
+            this.Controls.Add(this.bottomPanel);
+            this.Controls.Add(this.topPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -233,8 +168,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Slumber";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.topPanel.ResumeLayout(false);
+            this.bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -244,12 +180,9 @@
         private Button lockButton;
         private Button restartButton;
         private Button shutButton;
-        private CircularProgressBar_NET5.CircularProgressBar progressBar;
-        private Button exitButton;
-        private TextBox secondsTextBox;
-        private System.Windows.Forms.Timer timerWidget;
-        private Label label1;
-        private TextBox minutesTextBox;
-        private Label label2;
+        private Panel topPanel;
+        private Panel bottomPanel;
+        private Button cancelButton;
+        private Button confirmButton;
     }
 }

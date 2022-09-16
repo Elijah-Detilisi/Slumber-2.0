@@ -55,7 +55,7 @@ namespace Slumber.Services.AudioService
             },
             {
                 "System: Control", new string[]{
-                        "Cancel Operation",  "Wake Up"
+                        "Yes",  "No"
                     }
             }
 
